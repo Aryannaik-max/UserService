@@ -37,6 +37,23 @@ class UserService extends CrudService {
         }
     }
 
+    async Authentication(token) {
+        try {
+            const verifyToken = await this.verifyToken(token);
+            if (!verifyToken) {
+                throw new Error('Invalid token');
+            }
+            const user = await this.userRepository.findById(verifyToken.id);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        } catch (error) {
+            console.log('Error during user authentication in UserService:', error);
+            throw new Error('Error authenticating user'); 
+        }
+    }
+
     async comparePassword(plainPassword, hashPassword) {
         try {
             return bcypt.compareSync(plainPassword, hashPassword);
@@ -56,6 +73,18 @@ class UserService extends CrudService {
         }
     }
 
+    async verifyToken(token) {
+        try {
+            const response = jwt.verify(token, JWT_SECRET);
+            return response;
+        } catch (error) {
+            console.log('Error verifying token in UserService:', error);
+            throw new Error('Error verifying token');
+        }
+    }
+
 }
+
+
 
 module.exports = UserService;
