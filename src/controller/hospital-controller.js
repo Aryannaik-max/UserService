@@ -14,8 +14,8 @@ const createHospital = async (req, res) => {
         }
         
         if (req.files && req.files.length > 0) {
-            data.logo = req.files.find((file) => file.fieldname === 'logo').location;
-            data.registrationDocument = req.files.find((file) => file.fieldname === 'registrationDocument').location;
+            data.registrationCertificate = req.files['registrationCertificate']?.[0]?.location;
+            data.accredeitationCetificate = req.files['accredeitationCetificate']?.[0]?.location;
         } else {
             return res.status(400).json({
                 data: {},

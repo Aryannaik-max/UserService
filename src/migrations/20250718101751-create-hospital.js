@@ -37,6 +37,14 @@ module.exports = {
         defaultValue: 'OPEN',
         allowNull: false
       },
+      registrationCertificate: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      accredeitationCetificate: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

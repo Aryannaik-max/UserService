@@ -41,7 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       values: ['OPEN', 'CLOSED'],
       defaultValue: 'OPEN',
       allowNull: false,
-    }
+    },
+    registrationCertificate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    accredeitationCetificate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Hospital',

@@ -13,9 +13,10 @@ const createAmbulance = async (req, res) => {
             verificationStatus: 'PENDING'
         }
         if (req.files && req.files.length > 0) {
-            data.rcDocument = req.files.find((file) => file.fieldname === 'rcDocument').location;
-            data.insuranceDocument = req.files.find((file) => file.fieldname === 'insuranceDocument').location;
-            data.permitDocument = req.files.find((file) => file.fieldname === 'permitDocument').location;
+            data.rcDocument = req.files['rcDocument']?.[0]?.location;
+            data.insuranceDocument = req.files['insuranceDocument']?.[0]?.location;
+            data.permitDocument = req.files['permitDocument']?.[0]?.location;
+            
         } else {
             return res.status(400).json({
                 data: {},

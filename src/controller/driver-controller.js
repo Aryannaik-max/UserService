@@ -13,17 +13,16 @@ const createDriver = async (req, res) => {
         }
 
         if (req.files && req.files.length > 0) {
-            data.driverLicenseDocument = req.files.find((file) => file.fieldname === 'driverLicenseDocument').location;
-            data.driverPhoto = req.files.find((file) => file.fieldname === 'driverPhoto').location;
+            data.driverLicenseDocument = req.files['driverLicenseDocument']?.[0]?.location;
+            data.driverPhoto = req.files['driverPhoto']?.[0]?.location;
         } else {
             return res.status(400).json({
-                data: {},
-                success: false,
+                data: {},                success: false,
                 message: 'Driver documents are required',
                 err: {}
             });
         }
-        
+
         const newDriver = await driverService.create(data);
         res.status(201).json({
             data: newDriver,
