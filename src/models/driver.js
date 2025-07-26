@@ -11,20 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Driver.belongsTO(models.user, {
+      Driver.belongsTo(models.User, {
         foreignKey: 'userId'
       });
-      Driver.hasOne(models.Ambulance, {
-        foreignKey: 'driverId',
+      Driver.belongsTo(models.Organization, {
+        foreignKey: 'orgId'
       });
     }
   }
   Driver.init({
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'Users',
+        key: 'id'
+      }
+    },
+    orgId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Organizations',
         key: 'id'
       }
     },

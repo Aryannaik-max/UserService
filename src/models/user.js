@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Driver, {
         foreignKey: 'userId',
       });
-      User.hasOne(models.Hospital, {
-        foreignKey: 'userId',
-      });
     }
   }
   User.init({

@@ -11,29 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Hospital.belongsTo(models.Organization,
+        {foreignKey: 'orgId'}
+      )
     }
   }
   Hospital.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    orgId: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      references: {
+        modelName: 'Organizations',
+        key: 'id'
+      }
     },
     bedsAvailabel: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    verificationStatus: {
-      type: DataTypes.ENUM,
-      values: ['PENDING', 'VERIFIED', 'REJECTED'],
-      defaultValue: 'PENDING',
       allowNull: false,
     },
     status: {
@@ -42,14 +35,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'OPEN',
       allowNull: false,
     },
-    registrationCertificate: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     accredeitationCetificate: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
+    }
   }, {
     sequelize,
     modelName: 'Hospital',

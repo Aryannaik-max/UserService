@@ -9,36 +9,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false
+      orgId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Organizations',
+          key: 'id'
+        }
       },
       bedsAvailabel: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      verificationStatus: {
-        type: Sequelize.ENUM,
-        values: ['PENDING', 'VERIFIED', 'REJECTED'],
-        defaultValue: 'PENDING',
         allowNull: false
       },
       status: {
         type: Sequelize.ENUM,
         values: ['OPEN', 'CLOSED'],
         defaultValue: 'OPEN',
-        allowNull: false
-      },
-      registrationCertificate: {
-        type: Sequelize.STRING,
         allowNull: false
       },
       accredeitationCetificate: {

@@ -2,44 +2,55 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Drivers', {
+    await queryInterface.createTable('Organizations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      orgId: {
-        type: Sequelize.INTEGER,
+      type: {
+        type: Sequelize.ENUM,
         allowNull: false,
-        references: {
-          model: 'Organizations',
-          key: 'id'
-        }
+        values: ['HOSPITAL', 'AMBULANCE-SERVICE'],
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
         }
       },
-      driverLicenseNumber: {
+      registrationNumber: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      driverLicenseDocument: {
+      registrationCertificate: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      driverPhoto: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      contactNumber: {
+      phoneNumber: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull: false
+      },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      verificationStatus: {
+        type: Sequelize.ENUM,
+        values: ['PENDING', 'SUCCESS', 'REJECTED'],
+        defaultValue: 'PENDING',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +63,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Drivers');
+    await queryInterface.dropTable('Organizations');
   }
 };

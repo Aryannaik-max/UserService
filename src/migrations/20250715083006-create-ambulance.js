@@ -17,9 +17,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      ownerId: {
+      orgId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Organizations',
+          key: 'id'
+        }
       },
       yearsOfResitration: {
         type: Sequelize.INTEGER,
