@@ -6,15 +6,12 @@ const createHospital = async (req, res) => {
     try {
 
         const data = {
-            name: req.body.name,
-            address: req.body.address,
-            contactNumber: req.body.contactNumber,
-            email: req.body.email,
-            verificationStatus: 'PENDING'
+            orgId: req.body.orgId,
+            bedsAvailabel: req.body.bedsAvailabel,
+            status: req.body.status,
         }
         
         if (req.files && req.files.length > 0) {
-            data.registrationCertificate = req.files['registrationCertificate']?.[0]?.location;
             data.accredeitationCetificate = req.files['accredeitationCetificate']?.[0]?.location;
         } else {
             return res.status(400).json({

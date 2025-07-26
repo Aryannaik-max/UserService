@@ -1,7 +1,8 @@
 
 module.exports = {
-    AmbulanceRepository: require('./ambulance-repository'),
-    DriverRepository: require('./driver-repository'),
-    HospitalRepository: require('./hospital-repository'),
-    UserRepository: require('./user-repository')
+    AmbulanceService: require('./ambulance-service'),
+    DriverService: require('./driver-service'),
+    HospitalService: require('./hospital-service'),
+    OrganizationService: require('./organization-service'),
+    UserService: require('./user-service')
 };
