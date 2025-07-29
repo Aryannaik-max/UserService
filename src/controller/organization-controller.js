@@ -1,4 +1,3 @@
-const { or } = require('sequelize');
 const { OrganizationService } = require('../services/index');
 const organizationService = new OrganizationService();
 
@@ -15,7 +14,7 @@ const createOrganization = async () => {
             registrationNumber: req.body.registrationNumber
         }
 
-        if(req.files && req.files.lenght>0){
+        if(req.files && req.files.lenght > 0){
             data.registrationCertificate = req.files['registrationCertificate']?.[0]?.location;
         }else{
             return res.status(400).json({

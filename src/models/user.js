@@ -28,10 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    medicalHistory: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     role: {
       type: DataTypes.ENUM,

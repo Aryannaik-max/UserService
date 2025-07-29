@@ -15,9 +15,10 @@ module.exports = {
         references: {
           model: 'Organizations',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
-      bedsAvailabel: {
+      bedsAvailable: {
         type: Sequelize.INTEGER,
         allowNull: false
       },

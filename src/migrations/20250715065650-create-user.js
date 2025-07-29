@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      medicalHistory: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      phoneNumber: {
+      type: Sequelize.STRING,
+      allowNull: false
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,

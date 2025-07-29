@@ -1,4 +1,4 @@
-const { DriverService } = require('../service/index');
+const { DriverService } = require('../servicee/index');
 const driverService = new DriverService();
 
 const createDriver = async (req, res) => {
@@ -17,7 +17,8 @@ const createDriver = async (req, res) => {
             data.driverPhoto = req.files['driverPhoto']?.[0]?.location;
         } else {
             return res.status(400).json({
-                data: {},                success: false,
+                data: {},                
+                success: false,
                 message: 'Driver documents are required',
                 err: {}
             });

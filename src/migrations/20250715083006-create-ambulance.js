@@ -23,7 +23,8 @@ module.exports = {
         references: {
           model: 'Organizations',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       yearsOfResitration: {
         type: Sequelize.INTEGER,

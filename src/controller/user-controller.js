@@ -1,4 +1,4 @@
-const { UserService } = require('../service/index');
+const { UserService } = require('../services/index');
 const userService = new UserService();
 
 

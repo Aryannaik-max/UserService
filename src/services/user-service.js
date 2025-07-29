@@ -1,7 +1,8 @@
 const { UserRepository } = require('../repository/index');
 const CrudService = require('./crud-service');
-const bcypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { JWT_SECRET } = require('../config/serverConfig');
+const jwt = require('jsonwebtoken');
 
 class UserService extends CrudService {
     constructor() {
@@ -23,11 +24,11 @@ class UserService extends CrudService {
         try {
             const user = await this.userRepository.findByEmail(email);
             const passwordMatch = await this.comparePassword(plainPassword, user.password);
-            if (!passwordMatch) {
-                throw new Error('Invalid email or password');
-            }
             if (!user) {
                 throw new Error('User not found');
+            }
+            if (!passwordMatch) {
+                throw new Error('Invalid email or password');
             }
             const jwtToken = await this.generateJwtToken({email: user.email, id: user.id});
             return jwtToken;
@@ -56,7 +57,7 @@ class UserService extends CrudService {
 
     async comparePassword(plainPassword, hashPassword) {
         try {
-            return bcypt.compareSync(plainPassword, hashPassword);
+            return bcrypt.compareSync(plainPassword, hashPassword);
         } catch (error) {
             console.log('Error comparing passwords in UserService:', error);
             throw new Error('Error comparing passwords');

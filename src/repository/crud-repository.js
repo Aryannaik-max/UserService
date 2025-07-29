@@ -61,7 +61,7 @@ class CrudRepository {
 
     async findByEmail(email) {
         try {
-            const response = await this.model.findOne({ where: { email } });
+            const response = await this.model.findOne({ where: { email: email } });
             if (!response) {
                 throw new Error(`Record with email ${email} not found`);
             }

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    bedsAvailabel: {
+    bedsAvailable: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
