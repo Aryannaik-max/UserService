@@ -1,7 +1,7 @@
 const { OrganizationService } = require('../services/index');
 const organizationService = new OrganizationService();
 
-const createOrganization = async () => {
+const createOrganization = async (req, res) => {
     try {
         const data = {
             type: req.body.type,
@@ -42,6 +42,25 @@ const createOrganization = async () => {
         });
     }
 }
+
+const getOrganizationProfile = async (req, res) => {
+    try {
+        const organization = req.user;  
+        res.status(200).json({
+            data: organization,
+            success: true,
+            message: 'successfully got user profile'
+        });
+    } catch (error) {
+        console.error('Error in getUserProfile controller:', error);
+        res.status(500).json({ 
+            data: {},
+            success: false, 
+            message: 'Something went wrong' ,
+            err: error
+        });
+    }
+};
 
 const getAllOrrganizations = async (req, res) => {
     try {
@@ -132,5 +151,6 @@ module.exports = {
     getAllOrrganizations,
     getOrganizationById,
     updateOrganization,
-    deleteOrganization
+    deleteOrganization,
+    getOrganizationProfile
 }

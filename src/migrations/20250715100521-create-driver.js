@@ -18,14 +18,6 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      },
       driverLicenseNumber: {
         type: Sequelize.STRING,
         allowNull: false

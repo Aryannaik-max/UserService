@@ -22,6 +22,25 @@ const signUp = async (req, res) => {
     }
 }
 
+const getUserProfile = async (req, res) => {
+    try {
+        const user = req.user;  
+        res.status(200).json({
+            data: user,
+            success: true,
+            message: 'successfully got user profile'
+        });
+    } catch (error) {
+        console.error('Error in getUserProfile controller:', error);
+        res.status(500).json({ 
+            data: {},
+            success: false, 
+            message: 'Something went wrong' ,
+            err: error
+        });
+    }
+};
+
 const Authentication = async (req, res) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -112,5 +131,6 @@ module.exports = {
     login,
     deleteUser,
     updateUser,
-    Authentication
+    Authentication,
+    getUserProfile
 };

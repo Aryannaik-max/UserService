@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    totalDoctors : {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    
     status: {
       type: DataTypes.ENUM,
       values: ['OPEN', 'CLOSED'],

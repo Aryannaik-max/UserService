@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      phoneNumber: {
+      userPhoneNumber: {
       type: Sequelize.STRING,
       allowNull: false
       },
@@ -30,11 +30,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      role: {
-        type: Sequelize.ENUM,
-        values: ['RESPONDER', 'HOSPITAL', 'AMBULANCE', 'ADMIN'],
-        defaultValue: 'RESPONDER',
-        allowNull: false
+      emergencyContact: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      primaryAddress: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

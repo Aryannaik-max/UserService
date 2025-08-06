@@ -11,9 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Organization.belongsTo(models.User,
-        {foreignKey: 'userId'}
-      );
       Organization.hasOne(models.Driver, {
         foreignKey: 'orgId'
       });
@@ -29,15 +26,11 @@ module.exports = (sequelize, DataTypes) => {
   Organization.init({
     type: {
       type: DataTypes.ENUM,
-      values: ['HOSPITAL', 'AMBULANCE-SERVICE'],
-      allowNull: false
+      values: ['HOSPITAL', 'AMBULANCE_SERVICE'],
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     registrationNumber: {

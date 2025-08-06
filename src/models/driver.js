@@ -11,23 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Driver.belongsTo(models.User, {
-        foreignKey: 'userId'
-      });
       Driver.belongsTo(models.Organization, {
         foreignKey: 'orgId'
       });
     }
   }
   Driver.init({
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    },
+    
     orgId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -65,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     location_long: {
       type: DataTypes.DECIMAL(10,8),
       allowNull: true
+    },
+    currentEmergencyId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     status: {
       type: DataTypes.ENUM,

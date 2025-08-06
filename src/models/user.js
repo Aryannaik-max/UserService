@@ -15,9 +15,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasOne(models.Driver, {
-        foreignKey: 'userId',
-      });
+    
     }
   }
   User.init({
@@ -38,16 +36,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    phoneNumber: {
+    userPhoneNumber: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    role: {
-      type: DataTypes.ENUM,
-      values: ['RESPONDER', 'HOSPITAL', 'DRIVER', 'ADMIN'],
-      defaultValue: 'RESPONDER',
-      allowNull: false,
-    }
+    emergencyContact: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    primaryAddress: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'User',

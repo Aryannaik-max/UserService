@@ -1,8 +1,6 @@
 const { UserRepository } = require('../repository/index');
 const CrudService = require('./crud-service');
-const bcrypt = require('bcrypt');
-const { JWT_SECRET } = require('../config/serverConfig');
-const jwt = require('jsonwebtoken');
+const { signUp, login, authentication, comparePassword, generateJwtToken, verifyToken } = require('../utils/authUtils');
 
 class UserService extends CrudService {
     constructor() {
@@ -12,77 +10,60 @@ class UserService extends CrudService {
 
     async signUp(userData) {
         try {
-            const newUser = await this.userRepository.create(userData);
-            return newUser;
+            return await signUp.call(this, userData);
         } catch (error) {
-            console.log('Error during user sign-up in UserService:', error);
+            console.error('Error during user sign-up in UserService:', error);
             throw new Error('Error signing up user');
         }
     }
 
     async login(email, plainPassword) {
         try {
-            const user = await this.userRepository.findByEmail(email);
-            const passwordMatch = await this.comparePassword(plainPassword, user.password);
-            if (!user) {
-                throw new Error('User not found');
-            }
-            if (!passwordMatch) {
-                throw new Error('Invalid email or password');
-            }
-            const jwtToken = await this.generateJwtToken({email: user.email, id: user.id});
-            return jwtToken;
+            return await login.call(this, email, plainPassword);
         } catch (error) {
-            console.log('Error during user login in UserService:', error);
-            throw new Error('Error logging in user'); 
+            console.error('Error during user login in UserService:', error);
+            throw new Error('Error logging in user');
         }
     }
 
-    async Authentication(token) {
+    async authentication(token) {
         try {
-            const verifyToken = await this.verifyToken(token);
-            if (!verifyToken) {
-                throw new Error('Invalid token');
-            }
-            const user = await this.userRepository.findById(verifyToken.id);
-            if (!user) {
-                throw new Error('User not found');
-            }
-            return user;
+            return await authentication.call(this, token);
         } catch (error) {
-            console.log('Error during user authentication in UserService:', error);
-            throw new Error('Error authenticating user'); 
+            console.error('Error during user authentication in UserService:', error);
+            throw new Error('Error authenticating user');
         }
     }
 
     async comparePassword(plainPassword, hashPassword) {
         try {
-            return bcrypt.compareSync(plainPassword, hashPassword);
+            return await comparePassword.call(this, plainPassword, hashPassword);
         } catch (error) {
-            console.log('Error comparing passwords in UserService:', error);
+            console.error('Error comparing passwords in UserService:', error);
             throw new Error('Error comparing passwords');
         }
     }
 
     async generateJwtToken(payload) {
         try {
-            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-            return token;
+            return await generateJwtToken.call(this, payload);
         } catch (error) {
-            console.log('Error generating JWT token in UserService:', error);
-            throw new Error('Error generating JWT token'); 
+            console.error('Error generating JWT token in UserService:', error);
+            throw new Error('Error generating JWT token');
         }
     }
 
     async verifyToken(token) {
         try {
-            const response = jwt.verify(token, JWT_SECRET);
-            return response;
+            return await verifyToken.call(this, token);
         } catch (error) {
-            console.log('Error verifying token in UserService:', error);
+            console.error('Error verifying token in UserService:', error);
             throw new Error('Error verifying token');
         }
     }
+
+
+    
 
 }
 

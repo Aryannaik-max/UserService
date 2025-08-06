@@ -1,4 +1,4 @@
-const { DriverService } = require('../servicee/index');
+const { DriverService } = require('../services/index');
 const driverService = new DriverService();
 
 const createDriver = async (req, res) => {
@@ -83,6 +83,25 @@ const getDriverById = async (req, res) => {
     }
 }
 
+const getDriverProfile = async (req, res) => {
+    try {
+        const driver = req.user;  
+        res.status(200).json({
+            data: driver,
+            success: true,
+            message: 'successfully got user profile'
+        });
+    } catch (error) {
+        console.error('Error in getUserProfile controller:', error);
+        res.status(500).json({ 
+            data: {},
+            success: false, 
+            message: 'Something went wrong' ,
+            err: error
+        });
+    }
+};
+
 const updateDriver = async (req, res) => {
     try {
         const driverId = req.params.id;
@@ -130,5 +149,6 @@ module.exports = {
     getAllDrivers,
     getDriverById,
     updateDriver,
-    deleteDriver
+    deleteDriver,
+    getDriverProfile
 };
