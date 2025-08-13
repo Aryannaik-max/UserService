@@ -1,4 +1,5 @@
 const { OrganizationService } = require('../services/index');
+const UploadToS3 = require('../utils/s3Upload');
 const organizationService = new OrganizationService();
 
 const createOrganization = async (req, res) => {
@@ -10,13 +11,19 @@ const createOrganization = async (req, res) => {
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
             verificationStatus: 'PENDING',
-            userId: req.body.userId,
-            registrationNumber: req.body.registrationNumber
-        }
+            registrationNumber: req.body.registrationNumber,
+            password: req.body.password
+        };
 
-        if(req.files && req.files.lenght > 0){
-            data.registrationCertificate = req.files['registrationCertificate']?.[0]?.location;
-        }else{
+        if (
+            req.files &&
+            req.files['registrationCertificate'] &&
+            req.files['registrationCertificate'].length > 0
+        ) {
+            const file = req.files['registrationCertificate'][0];
+            const certificateUrl = await UploadToS3(file);
+            data.registrationCertificate = certificateUrl;
+        } else {
             return res.status(400).json({
                 data: {},
                 success: false,
@@ -26,6 +33,7 @@ const createOrganization = async (req, res) => {
         }
 
         const newOrganization = await organizationService.create(data);
+
         res.status(200).json({
             data: newOrganization,
             success: true,
@@ -33,13 +41,57 @@ const createOrganization = async (req, res) => {
             err: {}
         });
     } catch (error) {
-        console.log('Error during hospital creation in HospitalController:');
+        console.log('Error during orgainzation creation in OrganizationController:');
+        console.error(error);
         res.status(500).json({
             data: {},
             success: false,
             message: 'Error creating organization',
             err: error
         });
+    }
+}
+
+const Authentication = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const user = await organizationService.Authentication(token);
+        res.status(200).json({
+            data: user,
+            success: true,
+            message: 'User authenticated successfully',
+            err: {}
+        });
+    } catch (error) {
+        console.log('Error during user authentication in UserController:', error);
+        res.status(500).json({
+            data: {},
+            success: false,
+            message: 'Error authenticating user',
+            err: error
+        }); 
+    }
+}
+
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const jwtToken = await organizationService.login(email, password);
+        res.status(200).json({
+            data: jwtToken,
+            success: true,
+            message: 'User logged in successfully',
+            err: {}
+        });
+    } catch (error) {
+        console.log('Error during user login in UserController:', error);
+        res.status(500).json({
+            data: {},
+            success: false,
+            message: 'Error logging in user',
+            err: error
+        });
+        
     }
 }
 
@@ -152,5 +204,7 @@ module.exports = {
     getOrganizationById,
     updateOrganization,
     deleteOrganization,
-    getOrganizationProfile
+    getOrganizationProfile,
+    login,
+    Authentication
 }

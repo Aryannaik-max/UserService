@@ -4,10 +4,14 @@ const jwt = require('jsonwebtoken');
 
 
 
+class AuthUtils {
+    constructor(repo) {
+        this.repo = repo;
+    }
 
-const signUp = async (userData) =>{
+    async signUp(userData) {
         try {
-            const newUser = await this.userRepository.create(userData);
+            const newUser = await this.repo.create(userData);
             return newUser;
         } catch (error) {
             console.log('Error during user sign-up in UserService:', error);
@@ -15,9 +19,9 @@ const signUp = async (userData) =>{
         }
     }
 
-const login = async (email, plainPassword) =>{
+    async login(email, plainPassword) {
         try {
-            const user = await this.userRepository.findByEmail(email);
+            const user = await this.repo.findByEmail(email);
             const passwordMatch = await this.comparePassword(plainPassword, user.password);
             if (!user) {
                 throw new Error('User not found');
@@ -33,13 +37,13 @@ const login = async (email, plainPassword) =>{
         }
     }
 
-const authentication = async (token) =>{
+    async authentication(token) {
         try {
             const verifyToken = await this.verifyToken(token);
             if (!verifyToken) {
                 throw new Error('Invalid token');
             }
-            const user = await this.userRepository.findById(verifyToken.id);
+            const user = await this.repo.findById(verifyToken.id);
             if (!user) {
                 throw new Error('User not found');
             }
@@ -50,7 +54,7 @@ const authentication = async (token) =>{
         }
     }
 
-const comparePassword = async (plainPassword, hashPassword) => {
+    async comparePassword(plainPassword, hashPassword) {
         try {
             return bcrypt.compareSync(plainPassword, hashPassword);
         } catch (error) {
@@ -59,7 +63,7 @@ const comparePassword = async (plainPassword, hashPassword) => {
         }
     }
 
-const generateJwtToken = async (payload) => {
+    async generateJwtToken(payload) {
         try {
             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
             return token;
@@ -69,7 +73,7 @@ const generateJwtToken = async (payload) => {
         }
     }
 
-const verifyToken = async (token) =>{
+    async verifyToken (token){
         try {
             const response = jwt.verify(token, JWT_SECRET);
             return response;
@@ -78,13 +82,10 @@ const verifyToken = async (token) =>{
             throw new Error('Error verifying token');
         }
     }
+}
 
 
-module.exports = {
-    signUp,
-    login,
-    authentication,
-    comparePassword,
-    generateJwtToken,
-    verifyToken
-};
+
+
+
+module.exports = AuthUtils;
