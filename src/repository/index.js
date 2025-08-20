@@ -1,3 +1,4 @@
+const PreRegisterDriverRepository = require('./preregisterDriver-repository');
 
 
 module.exports = {
@@ -5,5 +6,6 @@ module.exports = {
     DriverRepository: require('./driver-repository'),   
     HospitalRepository: require('./hospital-repository'),
     UserRepository: require('./user-repository'),
-    OrganizationRepository: require('./organization-repository')
+    OrganizationRepository: require('./organization-repository'),
+    PreRegisterDriverRepository: require('./preregisterDriver-repository')
 };

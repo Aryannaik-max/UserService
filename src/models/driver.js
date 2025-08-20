@@ -64,8 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ['ONLINE', 'OFFLINE', 'BUSY'],
       allowNull: false,
-    }
-  }, {
+    }}, {
     sequelize,
     modelName: 'Driver',
   });

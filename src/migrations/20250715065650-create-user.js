@@ -13,10 +13,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      medicalHistory: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
       userPhoneNumber: {
       type: Sequelize.STRING,
       allowNull: false
@@ -26,17 +22,14 @@ module.exports = {
         allowNull: false,
         unique: true 
       },
+      role: {
+        type: Sequelize.ENUM,
+        values: ['USER', 'DRIVER', 'ORGANIZATION_AMBULANCE', 'ORGANIZATION_HOSPITAL'],
+        defaultValue: 'USER'
+    },
       password: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      emergencyContact: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      primaryAddress: {
-        type: Sequelize.STRING,
-        allowNull: true
       },
       createdAt: {
         allowNull: false,

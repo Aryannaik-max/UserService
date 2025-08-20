@@ -15,13 +15,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Organization.hasOne(models.Driver, {
+      Organization.hasMany(models.Driver, {
         foreignKey: 'orgId'
       });
-      Organization.hasOne(models.Hospital, {
+      Organization.hasMany(models.Hospital, {
         foreignKey: 'orgId'
       });
-      Organization.hasOne(models.Ambulance, {
+      Organization.hasMany(models.Ambulance, {
+        foreignKey: 'orgId'
+      });
+      Organization.hasMany(models.AmbulanceService, {
         foreignKey: 'orgId'
       });
 
@@ -60,6 +63,11 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'ORGANIZATION'
     },
     verificationStatus: {
       type: DataTypes.ENUM,

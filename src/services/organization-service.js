@@ -22,11 +22,11 @@ class OrganizationService extends CrudService {
                 });
             }
 
-            if(organizationData.type === 'DRIVER') {
+            if(organizationData.type === 'AMBULANCE_SERVICE') {
                 await Driver.create({
                     orgId: organizationData.id,
-                    vehicleType: organizationData.vehicleType,
-                })
+                    ambulanceCount: organizationData.ambulanceCount
+                });
             }
         } catch (error) {
             console.error('Error during user sign-up in OrganizationService:', error);

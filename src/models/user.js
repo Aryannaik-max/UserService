@@ -32,22 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    medicalHistory: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
     userPhoneNumber: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    emergencyContact: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    primaryAddress: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
+    role: {
+      type: DataTypes.ENUM,
+      values: ['USER', 'DRIVER', 'ORGANIZATION_AMBULANCE', 'ORGANIZATION_HOSPITAL'],
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'User',

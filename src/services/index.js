@@ -4,5 +4,6 @@ module.exports = {
     DriverService: require('./driver-service'),
     HospitalService: require('./hospital-service'),
     OrganizationService: require('./organization-service'),
-    UserService: require('./user-service')
+    UserService: require('./user-service'),
+    PreRegisterDriverService: require('./preregisterDriver-service')
 };
